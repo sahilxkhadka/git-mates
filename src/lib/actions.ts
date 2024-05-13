@@ -7,7 +7,7 @@ export const getFollwersList = async (userName: string) => {
 	const res = await fetch(
 		`https://api.github.com/users/${userName}/followers?per_page=1000000`
 	);
-	const data: Data = await res.json();
+	const data: Data[] = await res.json();
 	return data;
 };
 
@@ -16,7 +16,7 @@ export const getFollowingList = async (userName: string) => {
 	const res = await fetch(
 		`https://api.github.com/users/${userName}/following?per_page=1000000`
 	);
-	const data: Data = await res.json();
+	const data: Data[] = await res.json();
 	return data;
 };
 
