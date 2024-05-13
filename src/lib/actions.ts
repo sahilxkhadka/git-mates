@@ -1,31 +1,33 @@
+import { redirect } from "next/navigation";
 import { Data } from "./definitions";
+import { unstable_noStore as noStore } from "next/cache";
 
 export const getFollwersList = async (userName: string) => {
-	const res = await fetch(`https://api.github.com/users/${userName}/followers`);
+	noStore();
+	const res = await fetch(
+		`https://api.github.com/users/${userName}/followers?per_page=1000000`
+	);
 	const data: Data = await res.json();
 	return data;
 };
 
 export const getFollowingList = async (userName: string) => {
-	const res = await fetch(`https://api.github.com/users/${userName}/following`);
+	noStore();
+	const res = await fetch(
+		`https://api.github.com/users/${userName}/following?per_page=1000000`
+	);
 	const data: Data = await res.json();
 	return data;
 };
 
 export const getDetailsForUser = async (
-	prevState: { userName: string },
+	prevState: { error: string },
 	data: FormData
 ) => {
 	const userName = (data.get("userName") as string) ?? "";
 
-	const followersData = getFollwersList(userName);
-	const followingData = getFollowingList(userName);
-	const [followersList, followingList] = await Promise.all([
-		followersData,
-		followingData,
-	]);
-	console.log("🚀 ~ followersList:", followersList);
-	console.log("🚀 ~ followingList:", followingList);
-
-	return { userName };
+	if (userName.trim().length === 0) {
+		return { error: "UserName is required" };
+	}
+	redirect(`?userName=${userName}`);
 };

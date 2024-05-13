@@ -7,27 +7,18 @@ type FormState = {
 	userName: string;
 };
 
-async function action(prevState: FormState, data: FormData) {
-	await new Promise((resolve) => setTimeout(resolve, 5000));
-	const userName = data.get("userName");
-	console.log(userName);
-	return {
-		userName: "Sahil",
-	};
-}
-
 export default function UserForm() {
-	const [state, formAction] = useFormState(getDetailsForUser, { userName: "" });
+	const [state, formAction] = useFormState(getDetailsForUser, { error: "" });
 	return (
 		<form action={formAction}>
 			<input
 				type='text'
 				name='userName'
 				placeholder='Enter your username'
-				required
 				className='text-gray-600'
 			/>
 			<Button />
+			{state.error && <p>{state.error}</p>}
 		</form>
 	);
 }
