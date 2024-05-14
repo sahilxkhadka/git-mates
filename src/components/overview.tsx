@@ -1,6 +1,6 @@
 import { getFollowingList, getFollwersList } from "@/lib/actions";
 import { Tabs } from "@/lib/definitions";
-import { filterImposters } from "@/lib/utils";
+import { filterFollowedUsers, filterImposters } from "@/lib/utils";
 import ListItem from "./list-item";
 
 interface Props {
@@ -18,10 +18,11 @@ export default async function OverView({ userName, activeTab }: Props) {
 	]);
 	const imposters = filterImposters(followers, following);
 	// console.log("🚀 ~ OverView ~ followingList:", followingList);
+	const updatedFollowersList = filterFollowedUsers(followers, following);
 
 	const overallList = {
 		imposters,
-		followers,
+		followers: updatedFollowersList,
 		following,
 	};
 	const listItems = overallList[activeTab];

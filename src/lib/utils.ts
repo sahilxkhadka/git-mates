@@ -17,3 +17,18 @@ export const filterImposters = (followers: Data[], following: Data[]) => {
 	});
 	return imposters;
 };
+
+export const filterFollowedUsers = (followers: Data[], following: Data[]) => {
+	const filteredFollowers = followers.map((follower) => {
+		let hasFollowed = false;
+		const followerId = follower.id;
+		following.forEach((user) => {
+			if (user.id === followerId) {
+				hasFollowed = true;
+				return;
+			}
+		});
+		return { ...follower, hasFollowed };
+	});
+	return filteredFollowers;
+};
