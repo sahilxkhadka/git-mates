@@ -4,6 +4,7 @@ import "./globals.css";
 import Image from "next/image";
 import UserForm from "@/components/user-form";
 import githubOctacat from "../../public/github-octacat.svg";
+import { Suspense } from "react";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -22,7 +23,9 @@ export default function RootLayout({
 			<body className={inter.className}>
 				<main className='flex h-screen flex-col items-center gap-8 p-8'>
 					<Image src={githubOctacat} alt='Github Logo' />
-					<UserForm />
+					<Suspense>
+						<UserForm />
+					</Suspense>
 					{children}
 				</main>
 			</body>
