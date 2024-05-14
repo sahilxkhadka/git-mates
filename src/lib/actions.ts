@@ -39,5 +39,5 @@ export const getDetailsForUser = async (
 	if (userName.trim().length === 0) {
 		return { error: "UserName is required" };
 	}
-	redirect(`?userName=${userName}`);
+	redirect(`?userName=${userName}&tab=imposters`);
 };

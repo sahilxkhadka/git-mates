@@ -15,5 +15,5 @@ export const filterImposters = (followers: Data[], following: Data[]) => {
 			imposters.push(user);
 		}
 	});
-	console.log(imposters);
+	return imposters;
 };

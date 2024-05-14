@@ -7,24 +7,43 @@ import githubOctacat from "../../public/github-octacat.svg";
 import superOctacat from "../../public/super-octacat.png";
 import { tabs } from "@/lib/constants";
 import Link from "next/link";
+import { Tabs } from "@/lib/definitions";
 
 interface Props {
 	searchParams?: {
-		userName: string;
+		userName?: string;
 		tab?: string;
 	};
 }
 
 export default async function Home({ searchParams }: Props) {
 	const userName = searchParams?.userName;
-	const activeTab = searchParams?.tab || "";
+	const activeTab = (searchParams?.tab || "imposters") as Tabs;
 	return (
-		<main className='flex min-h-screen flex-col items-center gap-4 p-8'>
+		<main className='flex min-h-screen flex-col items-center gap-8 p-8'>
 			<Image src={githubOctacat} alt='Github Logo' />
 			<UserForm />
 			{userName ? (
 				<Suspense fallback={<h1>Loadign....</h1>}>
-					<OverView userName={userName} />
+					<div className='w-min'>
+						<div className='flex justify-center'>
+							{tabs.map((tabItem) => (
+								<Link
+									key={tabItem}
+									href={{
+										query: { ...searchParams, tab: tabItem },
+									}}
+									className={`px-6 pb-1 capitalize transition-all ${
+										activeTab === tabItem &&
+										"text-blue-500 border-b border-blue-500 font-medium"
+									}`}
+								>
+									{tabItem}
+								</Link>
+							))}
+						</div>
+						<OverView userName={userName} activeTab={activeTab} />
+					</div>
 				</Suspense>
 			) : (
 				<div className='flex-1'>
@@ -35,22 +54,6 @@ export default async function Home({ searchParams }: Props) {
 					/>
 				</div>
 			)}
-			<div className='flex'>
-				{tabs.map((tabItem) => (
-					<Link
-						key={tabItem}
-						href={{
-							query: { ...searchParams, tab: tabItem },
-						}}
-						className={`px-6 pb-1 capitalize transition-all ${
-							activeTab === tabItem &&
-							"text-blue-500 border-b border-blue-500 font-medium"
-						}`}
-					>
-						{tabItem}
-					</Link>
-				))}
-			</div>
 		</main>
 	);
 }

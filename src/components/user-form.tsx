@@ -1,7 +1,7 @@
 "use client";
 
 import { getDetailsForUser } from "@/lib/actions";
-import { useSearchParams } from "next/navigation";
+import { redirect, useSearchParams } from "next/navigation";
 import { useFormState, useFormStatus } from "react-dom";
 
 type FormState = {
@@ -12,6 +12,8 @@ export default function UserForm() {
 	const searchParams = useSearchParams();
 	const userName = searchParams.get("userName") || "";
 	const [state, formAction] = useFormState(getDetailsForUser, { error: "" });
+
+	if (state.error) redirect("/");
 
 	return (
 		<form action={formAction}>
