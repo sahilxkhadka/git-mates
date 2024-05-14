@@ -2,6 +2,7 @@ import { getFollowingList, getFollwersList } from "@/lib/actions";
 import { Tabs } from "@/lib/definitions";
 import { filterFollowedUsers, filterImposters } from "@/lib/utils";
 import ListItem from "./list-item";
+import { avatarOutlineColors } from "@/lib/constants";
 
 interface Props {
 	userName: string;
@@ -26,9 +27,19 @@ export default async function OverView({ userName, activeTab }: Props) {
 		following,
 	};
 	const listItems = overallList[activeTab];
+	const outlineColor = avatarOutlineColors[activeTab];
 	return (
 		<div>
 			<div className='my-5 flex flex-col items-center gap-5 px-1.5'>
+				<p className='capitalize text-sm sm:text-base font-medium'>
+					<span
+						className='font-semibold px-3 py-1.5 mr-1 rounded'
+						style={{ backgroundColor: outlineColor }}
+					>
+						{listItems.length}
+					</span>
+					<span className='capitalize inline-block'>{activeTab}</span>
+				</p>
 				{listItems.map((item) => (
 					<ListItem key={item.login} userInfo={item} activeTab={activeTab} />
 				))}
