@@ -29,7 +29,7 @@ export default async function OverView({ userName, activeTab }: Props) {
 		<div>
 			<div className='my-5 flex flex-col items-center gap-5'>
 				{listItems.map((item) => (
-					<ListItem key={item.login} userInfo={item} />
+					<ListItem key={item.login} userInfo={item} activeTab={activeTab} />
 				))}
 			</div>
 		</div>

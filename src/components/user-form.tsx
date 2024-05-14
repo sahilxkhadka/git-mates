@@ -1,7 +1,7 @@
 "use client";
 
 import { getDetailsForUser } from "@/lib/actions";
-import { redirect, useSearchParams } from "next/navigation";
+import { RedirectType, redirect, useSearchParams } from "next/navigation";
 import { useFormState, useFormStatus } from "react-dom";
 
 type FormState = {

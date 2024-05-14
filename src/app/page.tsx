@@ -8,6 +8,7 @@ import superOctacat from "../../public/super-octacat.png";
 import { tabs } from "@/lib/constants";
 import Link from "next/link";
 import { Tabs } from "@/lib/definitions";
+import ItemsLoader from "@/components/items-loader";
 
 interface Props {
 	searchParams?: {
@@ -24,27 +25,27 @@ export default async function Home({ searchParams }: Props) {
 			<Image src={githubOctacat} alt='Github Logo' />
 			<UserForm />
 			{userName ? (
-				<Suspense fallback={<h1>Loadign....</h1>}>
-					<div className='w-min'>
-						<div className='flex justify-center'>
-							{tabs.map((tabItem) => (
-								<Link
-									key={tabItem}
-									href={{
-										query: { ...searchParams, tab: tabItem },
-									}}
-									className={`px-6 pb-1 capitalize transition-all ${
-										activeTab === tabItem &&
-										"text-blue-500 border-b border-blue-500 font-medium"
-									}`}
-								>
-									{tabItem}
-								</Link>
-							))}
-						</div>
-						<OverView userName={userName} activeTab={activeTab} />
+				<div className='w-min'>
+					<div className='flex justify-center'>
+						{tabs.map((tabItem) => (
+							<Link
+								key={tabItem}
+								href={{
+									query: { ...searchParams, tab: tabItem },
+								}}
+								className={`px-6 pb-1 capitalize transition-all ${
+									activeTab === tabItem &&
+									"text-blue-500 border-b border-blue-500 font-medium"
+								}`}
+							>
+								{tabItem}
+							</Link>
+						))}
 					</div>
-				</Suspense>
+					<Suspense fallback={<ItemsLoader />}>
+						<OverView userName={userName} activeTab={activeTab} />
+					</Suspense>
+				</div>
 			) : (
 				<div className='flex-1'>
 					<Image

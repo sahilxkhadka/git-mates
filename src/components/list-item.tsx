@@ -1,13 +1,16 @@
-import { Data } from "@/lib/definitions";
+import { avatarRingColors } from "@/lib/constants";
+import { Data, Tabs } from "@/lib/definitions";
 import Image from "next/image";
 import Link from "next/link";
 
 interface Props {
 	userInfo: Data;
+	activeTab: Tabs;
 }
 
-export default function ListItem({ userInfo }: Props) {
+export default function ListItem({ userInfo, activeTab }: Props) {
 	const { login, avatar_url, html_url } = userInfo;
+	const ringColor = avatarRingColors[activeTab];
 	return (
 		<div className='w-full flex gap-4 items-center'>
 			<Image
@@ -15,7 +18,7 @@ export default function ListItem({ userInfo }: Props) {
 				alt={login}
 				width={50}
 				height={50}
-				className='object-cover rounded-full ring-4 ring-red-500'
+				className={`object-cover rounded-full ring-4 ${ringColor}`}
 			/>
 			<div className='flex-1 truncate'>{login}</div>
 			<Link
