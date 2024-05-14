@@ -32,6 +32,19 @@ body {
 	}
 }
 
-main {
+::-webkit-scrollbar-track {
+	background-color: transparent;
+}
+
+::-webkit-scrollbar {
+	width: 5px;
+	height: 10px;
+}
+
+::-webkit-scrollbar-thumb {
+	@apply rounded-3xl bg-blue-500;
+}
+
+.scrollbar-gutter {
 	scrollbar-gutter: stable;
 }
