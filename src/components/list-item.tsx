@@ -7,7 +7,7 @@ interface Props {
 }
 
 export default function ListItem({ userInfo }: Props) {
-	const { login, avatar_url, url } = userInfo;
+	const { login, avatar_url, html_url } = userInfo;
 	return (
 		<div className='w-full flex gap-4 items-center'>
 			<Image
@@ -19,7 +19,7 @@ export default function ListItem({ userInfo }: Props) {
 			/>
 			<div className='flex-1 truncate'>{login}</div>
 			<Link
-				href={url}
+				href={html_url}
 				target='_blank'
 				className='text-sm bg-green-950 text-red-500 border border-red-500 border-b-4 font-medium overflow-hidden relative px-4 py-2 rounded-md hover:brightness-150 hover:border-t-4 hover:border-b active:opacity-75 outline-none duration-300 group'
 			>
