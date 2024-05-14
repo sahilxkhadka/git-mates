@@ -14,7 +14,12 @@ export default async function OverView({ userName }: Props) {
 		followingData,
 	]);
 	filterImposters(followersList, followingList);
-	// console.log("🚀 ~ OverView ~ followersList:", followersList);
+	console.log("🚀 ~ OverView ~ followersList:", followersList);
 	// console.log("🚀 ~ OverView ~ followingList:", followingList);
-	return <div>OverView</div>;
+	return (
+		<div>
+			OverView
+			<div className='my-4 flex'></div>
+		</div>
+	);
 }

@@ -5,7 +5,12 @@ import { unstable_noStore as noStore } from "next/cache";
 export const getFollwersList = async (userName: string) => {
 	noStore();
 	const res = await fetch(
-		`https://api.github.com/users/${userName}/followers?per_page=1000000`
+		`https://api.github.com/users/${userName}/followers?per_page=1000000`,
+		{
+			headers: {
+				Authorization: "Bearer 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",
+			},
+		}
 	);
 	const data: Data[] = await res.json();
 	return data;
@@ -14,7 +19,12 @@ export const getFollwersList = async (userName: string) => {
 export const getFollowingList = async (userName: string) => {
 	noStore();
 	const res = await fetch(
-		`https://api.github.com/users/${userName}/following?per_page=1000000`
+		`https://api.github.com/users/${userName}/following?per_page=1000000`,
+		{
+			headers: {
+				Authorization: "Bearer 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",
+			},
+		}
 	);
 	const data: Data[] = await res.json();
 	return data;
