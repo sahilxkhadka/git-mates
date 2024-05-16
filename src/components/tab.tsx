@@ -15,6 +15,7 @@ export default function Tab({ searchParams }: Props) {
 			href={{
 				query: { ...searchParams, tab: "imposters" },
 			}}
+			scroll={false}
 			className='px-6 pb-1 capitalize border-b'
 		>
 			{"imposters"}

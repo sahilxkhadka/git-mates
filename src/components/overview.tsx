@@ -3,6 +3,8 @@ import { Tabs } from "@/lib/definitions";
 import { filterFollowedUsers, filterImposters } from "@/lib/utils";
 import ListItem from "./list-item";
 import { avatarOutlineColors } from "@/lib/constants";
+import Image from "next/image";
+import emptyStateImage from "../../public/empty-octacat.png";
 
 interface Props {
 	userName: string;
@@ -40,9 +42,17 @@ export default async function OverView({ userName, activeTab }: Props) {
 					</span>
 					<span className='capitalize inline-block'>{activeTab}</span>
 				</p>
-				{listItems.map((item) => (
-					<ListItem key={item.login} userInfo={item} activeTab={activeTab} />
-				))}
+				{listItems.length > 0 ? (
+					listItems.map((item) => (
+						<ListItem key={item.login} userInfo={item} activeTab={activeTab} />
+					))
+				) : (
+					<Image
+						src={emptyStateImage}
+						alt='empty state image'
+						placeholder='blur'
+					/>
+				)}
 			</div>
 		</div>
 	);

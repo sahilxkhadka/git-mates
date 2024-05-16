@@ -18,7 +18,7 @@ export default function UserForm() {
 
 	return (
 		<div>
-			<div className='flex items-end gap-3'>
+			<div className='flex items-end flex-wrap justify-center gap-3'>
 				<div className='input flex flex-col w-fit'>
 					<label
 						htmlFor='userName'
@@ -38,6 +38,12 @@ export default function UserForm() {
 								router.replace("/");
 							}
 						}}
+						onKeyDown={(e) => {
+							console.log(e.key);
+							if (e.key === "Enter") {
+								router.replace(`?userName=${userName}`);
+							}
+						}}
 					/>
 				</div>
 				<Link
@@ -47,7 +53,7 @@ export default function UserForm() {
 									pathname: "/",
 									query: { userName: userName },
 							  }
-							: { pathname: "/" }
+							: {}
 					}
 					className='bg-green-950 text-green-400 border border-green-400 border-b-4 font-medium overflow-hidden relative px-4 py-2 rounded-md hover:brightness-150 hover:border-t-4 hover:border-b active:opacity-75 outline-none duration-300 group'
 				>
