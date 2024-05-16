@@ -1,8 +1,8 @@
 "use client";
 
-import { getDetailsForUser } from "@/lib/actions";
-import { RedirectType, redirect, useSearchParams } from "next/navigation";
-import { useFormState, useFormStatus } from "react-dom";
+import Link from "next/link";
+import { useRouter, useSearchParams } from "next/navigation";
+import { useState } from "react";
 
 type FormState = {
 	userName: string;
@@ -10,13 +10,14 @@ type FormState = {
 
 export default function UserForm() {
 	const searchParams = useSearchParams();
-	const userName = searchParams.get("userName") || "";
-	const [state, formAction] = useFormState(getDetailsForUser, { error: "" });
+	const paramsName = searchParams.get("userName") || "";
 
-	if (state.error) redirect("/");
+	const router = useRouter();
+
+	const [userName, setUserName] = useState(paramsName);
 
 	return (
-		<form action={formAction}>
+		<div>
 			<div className='flex items-end gap-3'>
 				<div className='input flex flex-col w-fit'>
 					<label
@@ -30,22 +31,30 @@ export default function UserForm() {
 						placeholder='Enter your username'
 						name='userName'
 						className='border-blue-500 input px-[10px] py-[11px] text-xs border-2 rounded-[5px] w-[210px] focus:outline-none placeholder:text-white bg-transparent'
-						defaultValue={userName}
+						value={userName}
+						onChange={(e) => {
+							setUserName(e.target.value);
+							if (!e.target.value) {
+								router.replace("/");
+							}
+						}}
 					/>
 				</div>
-				<Button />
+				<Link
+					href={
+						userName
+							? {
+									pathname: "/",
+									query: { userName: userName },
+							  }
+							: { pathname: "/" }
+					}
+					className='bg-green-950 text-green-400 border border-green-400 border-b-4 font-medium overflow-hidden relative px-4 py-2 rounded-md hover:brightness-150 hover:border-t-4 hover:border-b active:opacity-75 outline-none duration-300 group'
+				>
+					<span className='bg-green-400 shadow-green-400 absolute -top-[150%] left-0 inline-flex w-80 h-[5px] rounded-md opacity-50 group-hover:top-[150%] duration-500 shadow-[0_0_10px_10px_rgba(0,0,0,0.3)]'></span>
+					Get Results
+				</Link>
 			</div>
-			{state.error && <p>{state.error}</p>}
-		</form>
+		</div>
 	);
 }
-
-const Button = () => {
-	const { pending } = useFormStatus();
-	return (
-		<button className='bg-green-950 text-green-400 border border-green-400 border-b-4 font-medium overflow-hidden relative px-4 py-2 rounded-md hover:brightness-150 hover:border-t-4 hover:border-b active:opacity-75 outline-none duration-300 group'>
-			<span className='bg-green-400 shadow-green-400 absolute -top-[150%] left-0 inline-flex w-80 h-[5px] rounded-md opacity-50 group-hover:top-[150%] duration-500 shadow-[0_0_10px_10px_rgba(0,0,0,0.3)]'></span>
-			Get Results
-		</button>
-	);
-};

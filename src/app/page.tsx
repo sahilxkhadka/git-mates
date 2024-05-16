@@ -17,6 +17,7 @@ interface Props {
 
 export default async function Home({ searchParams }: Props) {
 	const userName = searchParams?.userName;
+
 	const activeTab = (searchParams?.tab || "imposters") as Tabs;
 	return userName ? (
 		<div className='overflow-auto w-96 sm:overflow-hidden hover:overflow-auto flex-1 scrollbar-gutter'>

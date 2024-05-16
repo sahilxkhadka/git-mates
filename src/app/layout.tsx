@@ -3,7 +3,7 @@ import { Inter } from "next/font/google";
 import "./globals.css";
 import Image from "next/image";
 import UserForm from "@/components/user-form";
-import githubOctacat from "../../public/github-octacat.svg";
+import githubOctacat from "../../public/github-octacat.png";
 import { Suspense } from "react";
 
 const inter = Inter({ subsets: ["latin"] });
@@ -22,7 +22,7 @@ export default function RootLayout({
 		<html lang='en'>
 			<body className={inter.className}>
 				<main className='flex h-screen flex-col items-center gap-8 p-8'>
-					<Image src={githubOctacat} alt='Github Logo' />
+					<Image src={githubOctacat} alt='Github Logo' height={80} width={80} />
 					<Suspense>
 						<UserForm />
 					</Suspense>
