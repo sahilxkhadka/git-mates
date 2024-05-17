@@ -7,6 +7,7 @@ import { tabs } from "@/lib/constants";
 import { Tabs } from "@/lib/definitions";
 import Link from "next/link";
 import superOctacat from "../../public/super-octacat.png";
+import GithubButton from "@/components/github-btn";
 
 interface Props {
 	searchParams?: {
@@ -44,9 +45,14 @@ export default async function Home({ searchParams }: Props) {
 		</div>
 	) : (
 		<div className='flex-1'>
+			<div className='flex gap-4 mb-5 flex-wrap justify-center'>
+				<GithubButton />
+				<GithubButton />
+			</div>
 			<Image
 				src={superOctacat}
-				alt='Octacat gif'
+				alt='Octacat'
+				placeholder='blur'
 				className='max-h-full object-contain'
 			/>
 		</div>

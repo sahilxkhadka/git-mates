@@ -21,8 +21,14 @@ export default function RootLayout({
 	return (
 		<html lang='en'>
 			<body className={inter.className}>
-				<main className='flex h-screen flex-col items-center gap-8 p-8'>
-					<Image src={githubOctacat} alt='Github Logo' height={80} width={80} />
+				<main className='flex h-screen flex-col items-center gap-5 sm:gap-8 p-4 sm:p-8'>
+					<Image
+						src={githubOctacat}
+						alt='Github Logo'
+						height={80}
+						width={80}
+						placeholder='blur'
+					/>
 					<Suspense>
 						<UserForm />
 					</Suspense>

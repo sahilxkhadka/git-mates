@@ -39,3 +39,22 @@ input:-webkit-autofill:active {
 	transition: background-color 5000s ease-in-out 0s;
 	box-shadow: inset 0 0 20px 20px #000;
 }
+.cube {
+	transform-style: preserve-3d;
+}
+.button-icon:hover .cube {
+	transform: rotateX(90deg);
+}
+
+.side {
+	@apply absolute h-[47px] w-44 flex text-sm justify-center items-center font-semibold;
+}
+
+.top {
+	transform: rotateX(-90deg) translate3d(0, 13.5px, 2em);
+}
+
+.front {
+	/* background: #222229; */
+	transform: translate3d(0, 0, 0);
+}

@@ -1,4 +1,4 @@
-import { redirect } from "next/navigation";
+import { notFound, redirect } from "next/navigation";
 import { Data } from "./definitions";
 import { unstable_noStore as noStore } from "next/cache";
 
@@ -12,6 +12,11 @@ export const getFollwersList = async (userName: string) => {
 			},
 		}
 	);
+	console.log(res.status);
+	if (res.status === 404) {
+		notFound();
+		redirect("/");
+	}
 	const data: Data[] = await res.json();
 	return data;
 };
@@ -27,6 +32,10 @@ export const getFollowingList = async (userName: string) => {
 		}
 	);
 	const data: Data[] = await res.json();
+	if (res.status === 404) {
+		notFound();
+		redirect("/");
+	}
 	return data;
 };
 
@@ -40,4 +49,9 @@ export const getDetailsForUser = async (
 		return { error: "UserName is required" };
 	}
 	redirect(`?userName=${userName}&tab=imposters`);
+};
+
+export const redirectToHome = async () => {
+	"use server";
+	redirect("/");
 };

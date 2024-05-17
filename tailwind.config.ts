@@ -17,6 +17,10 @@ const config: Config = {
 				black: {
 					DEFAULT: "#0d1117",
 				},
+				githubGray: {
+					DEFAULT: "#21262d",
+					text: "#c9d1d9",
+				},
 			},
 		},
 	},

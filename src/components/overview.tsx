@@ -5,6 +5,7 @@ import ListItem from "./list-item";
 import { avatarOutlineColors } from "@/lib/constants";
 import Image from "next/image";
 import emptyStateImage from "../../public/empty-octacat.png";
+import { notFound } from "next/navigation";
 
 interface Props {
 	userName: string;
@@ -19,8 +20,8 @@ export default async function OverView({ userName, activeTab }: Props) {
 		followersData,
 		followingData,
 	]);
+	console.log("🚀 ~ OverView ~ followers:", followers);
 	const imposters = filterImposters(followers, following);
-	// console.log("🚀 ~ OverView ~ followingList:", followingList);
 	const updatedFollowersList = filterFollowedUsers(followers, following);
 
 	const overallList = {
