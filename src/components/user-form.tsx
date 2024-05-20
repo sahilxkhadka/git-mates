@@ -41,7 +41,7 @@ export default function UserForm() {
 						onKeyDown={(e) => {
 							console.log(e.key);
 							if (e.key === "Enter") {
-								router.replace(`?userName=${userName}`);
+								router.replace(`/overview?userName=${userName}`);
 							}
 						}}
 					/>
@@ -50,7 +50,7 @@ export default function UserForm() {
 					href={
 						userName
 							? {
-									pathname: "/",
+									pathname: "/overview",
 									query: { userName: userName },
 							  }
 							: {}

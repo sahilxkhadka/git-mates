@@ -1,12 +1,15 @@
+import { unstable_noStore as noStore, revalidateTag } from "next/cache";
 import { notFound, redirect } from "next/navigation";
 import { Data } from "./definitions";
-import { unstable_noStore as noStore } from "next/cache";
 
 export const getFollwersList = async (userName: string) => {
+	console.log("🚀 ~ getFollwersList ~ userName:", userName);
+	revalidateTag("followers");
 	noStore();
 	const res = await fetch(
 		`https://api.github.com/users/${userName}/followers?per_page=1000000`,
 		{
+			next: { tags: ["followers"] },
 			headers: {
 				Authorization: "Bearer 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",
 			},
@@ -15,27 +18,27 @@ export const getFollwersList = async (userName: string) => {
 	console.log(res.status);
 	if (res.status === 404) {
 		notFound();
-		redirect("/");
 	}
 	const data: Data[] = await res.json();
 	return data;
 };
 
 export const getFollowingList = async (userName: string) => {
+	revalidateTag("following");
 	noStore();
 	const res = await fetch(
 		`https://api.github.com/users/${userName}/following?per_page=1000000`,
 		{
+			next: { tags: ["following"] },
 			headers: {
 				Authorization: "Bearer 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",
 			},
 		}
 	);
-	const data: Data[] = await res.json();
 	if (res.status === 404) {
 		notFound();
-		redirect("/");
 	}
+	const data: Data[] = await res.json();
 	return data;
 };
 
@@ -52,6 +55,6 @@ export const getDetailsForUser = async (
 };
 
 export const redirectToHome = async () => {
-	"use server";
+	// revalidatePath("");
 	redirect("/");
 };
