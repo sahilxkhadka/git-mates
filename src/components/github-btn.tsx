@@ -16,6 +16,7 @@ export default function GithubButton({
 	return (
 		<Link
 			href={link}
+			target='_blank'
 			className='button-icon bg-githubGray flex border-2 w-fit h-fit cursor-pointer hover:border-green-400 group'
 		>
 			<div className='icon border-r bg-githubGray p-2.5 group-hover:border-green-400'>

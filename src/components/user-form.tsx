@@ -12,8 +12,6 @@ export default function UserForm() {
 	const searchParams = useSearchParams();
 	const paramsName = searchParams.get("userName") || "";
 
-	console.log(paramsName);
-
 	const router = useRouter();
 
 	const [userName, setUserName] = useState(paramsName);
