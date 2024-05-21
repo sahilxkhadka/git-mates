@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import { useRouter, useSearchParams } from "next/navigation";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 type FormState = {
 	userName: string;
@@ -12,9 +12,15 @@ export default function UserForm() {
 	const searchParams = useSearchParams();
 	const paramsName = searchParams.get("userName") || "";
 
+	console.log(paramsName);
+
 	const router = useRouter();
 
 	const [userName, setUserName] = useState(paramsName);
+
+	useEffect(() => {
+		setUserName(paramsName);
+	}, [paramsName]);
 
 	return (
 		<div>

@@ -7,6 +7,7 @@ import Image from "next/image";
 import emptyStateImage from "../../../public/empty-octacat.png";
 import { notFound } from "next/navigation";
 import Link from "next/link";
+import { revalidatePath } from "next/cache";
 
 interface Props {
 	searchParams?: {
@@ -49,6 +50,7 @@ export default async function Page({ searchParams }: Props) {
 								? "text-blue-500  border-blue-500 font-medium"
 								: "border-transparent"
 						}`}
+						scroll={true}
 					>
 						{tabItem}
 					</Link>
