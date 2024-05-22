@@ -2,6 +2,12 @@ import Image from "next/image";
 
 import GithubButton from "@/components/github-btn";
 import superOctacat from "../../public/super-octacat.png";
+import { Metadata } from "next";
+
+export const metadata: Metadata = {
+	title: "Git Mates",
+	description: "Git Your Gang Right, Keep Your Code Connections True!",
+};
 
 export default async function Home() {
 	return (

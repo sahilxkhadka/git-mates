@@ -1,18 +1,23 @@
+import ListItem from "@/components/list-item";
 import { getFollowingList, getFollwersList } from "@/lib/actions";
+import { avatarOutlineColors, tabs } from "@/lib/constants";
 import { Tabs } from "@/lib/definitions";
 import { filterFollowedUsers, filterImposters } from "@/lib/utils";
-import ListItem from "@/components/list-item";
-import { avatarOutlineColors, tabs } from "@/lib/constants";
 import Image from "next/image";
-import emptyStateImage from "../../../public/empty-octacat.png";
-import { notFound } from "next/navigation";
 import Link from "next/link";
-import { revalidatePath } from "next/cache";
+import emptyStateImage from "../../../public/empty-octacat.png";
 
 interface Props {
 	searchParams?: {
 		userName?: string;
 		tab?: Tabs;
+	};
+}
+
+export async function generateMetadata({ searchParams }: Props) {
+	return {
+		title: `Git ${searchParams?.tab || "imposters"}`,
+		description: "Git Your Real Followers: Discover Your True Gitizens!",
 	};
 }
 
