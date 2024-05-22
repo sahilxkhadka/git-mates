@@ -21,7 +21,7 @@ export default async function Home() {
 				/>
 				<GithubButton
 					variant='star'
-					link='https://github.com/sahilxkhadka/followers-check'
+					link='https://github.com/sahilxkhadka/git-mates'
 					mainText='STAR REPO'
 					hoverText='Git Mates'
 				/>
