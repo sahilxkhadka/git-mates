@@ -1,8 +1,6 @@
-import { redirectToHome } from "@/lib/actions";
+import Image from "next/image";
 import Link from "next/link";
 import emptyOctacat from "../../../public/empty-octacat.png";
-import Image from "next/image";
-import { revalidateTag } from "next/cache";
 
 export default function NotFound() {
 	return (
