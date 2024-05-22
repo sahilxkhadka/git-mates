@@ -21,7 +21,7 @@ export default function RootLayout({
 	return (
 		<html lang='en'>
 			<body className={inter.className}>
-				<main className='flex h-screen flex-col items-center gap-5 sm:gap-8 p-4 sm:p-8'>
+				<main className='flex h-screen flex-col items-center gap-4 p-4 sm:p-8'>
 					<Image
 						src={githubOctacat}
 						alt='Github Logo'
@@ -29,6 +29,17 @@ export default function RootLayout({
 						width={80}
 						placeholder='blur'
 					/>
+					<div className='text-center'>
+						<h1
+							className='text-xl sm:text-4xl font-black glitch'
+							data-text='Git Mates !'
+						>
+							Git Mates !
+						</h1>
+						<p className='animate-typing max-w-fit overflow-hidden whitespace-nowrap sm:text-lg  pr-0.5  text-white font-bold leading-none my-1'>
+							Discover your true gitizens.
+						</p>
+					</div>
 					<Suspense>
 						<UserForm />
 					</Suspense>

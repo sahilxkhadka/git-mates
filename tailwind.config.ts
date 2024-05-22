@@ -22,6 +22,20 @@ const config: Config = {
 					text: "#c9d1d9",
 				},
 			},
+			keyframes: {
+				typing: {
+					"0%": {
+						width: "0%",
+						visibility: "hidden",
+					},
+					"100%": {
+						width: "100%",
+					},
+				},
+			},
+			animation: {
+				typing: "typing 2s steps(27) 1 alternate",
+			},
 		},
 	},
 	plugins: [],
