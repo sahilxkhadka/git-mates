@@ -23,7 +23,7 @@ export default async function Home() {
 					variant='star'
 					link='https://github.com/sahilxkhadka/followers-check'
 					mainText='STAR REPO'
-					hoverText='Git followers'
+					hoverText='Git Mates'
 				/>
 			</div>
 			<Image

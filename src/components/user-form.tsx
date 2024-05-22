@@ -26,7 +26,7 @@ export default function UserForm() {
 				<div className='input flex flex-col w-fit'>
 					<label
 						htmlFor='userName'
-						className='text-blue-500 dark:bg-black text-xs font-semibold relative top-2 ml-[7px] px-[3px]  w-fit'
+						className='text-blue-500 bg-black text-xs font-semibold relative top-2 ml-[7px] px-[3px]  w-fit'
 					>
 						UserName:
 					</label>
