@@ -12,16 +12,10 @@ export default function Error({
 	error: Error & { digest?: string };
 	reset: () => void;
 }) {
-	const router = useRouter();
-	const handleClick = async () => {
-		// reset();
-		router.back();
-	};
-
 	useEffect(() => {
 		// Log the error to an error reporting service
 		console.error(error);
-	}, [error, router]);
+	}, [error]);
 
 	return (
 		<div>

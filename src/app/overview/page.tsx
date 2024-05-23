@@ -31,6 +31,8 @@ export default async function Page({ searchParams }: Props) {
 		followersData,
 		followingData,
 	]);
+	console.log("followers: ", followers);
+	console.log("following", following);
 	const imposters = filterImposters(followers, following);
 	const updatedFollowersList = filterFollowedUsers(followers, following);
 

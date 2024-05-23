@@ -3,7 +3,6 @@ import { notFound, redirect } from "next/navigation";
 import { Data } from "./definitions";
 
 export const getFollwersList = async (userName: string) => {
-	console.log("🚀 ~ getFollwersList ~ userName:", userName);
 	revalidateTag("followers");
 	noStore();
 	const res = await fetch(
@@ -11,11 +10,10 @@ export const getFollwersList = async (userName: string) => {
 		{
 			next: { tags: ["followers"] },
 			headers: {
-				Authorization: "Bearer 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",
+				Authorization: `Bearer ${process.env.GITHUB_TOKEN}`,
 			},
 		}
 	);
-	console.log(res.status);
 	if (res.status === 404) {
 		notFound();
 	}
@@ -31,7 +29,7 @@ export const getFollowingList = async (userName: string) => {
 		{
 			next: { tags: ["following"] },
 			headers: {
-				Authorization: "Bearer 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",
+				Authorization: `Bearer ${process.env.GITHUB_TOKEN}`,
 			},
 		}
 	);
