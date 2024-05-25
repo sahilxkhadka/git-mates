@@ -1,10 +1,8 @@
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
-import "./globals.css";
 import Image from "next/image";
-import UserForm from "@/components/user-form";
 import githubOctacat from "../../public/github-octacat.png";
-import { Suspense } from "react";
+import "./globals.css";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -40,9 +38,6 @@ export default function RootLayout({
 							Discover your true gitizens.
 						</p>
 					</div>
-					<Suspense>
-						<UserForm />
-					</Suspense>
 					{children}
 				</main>
 			</body>
