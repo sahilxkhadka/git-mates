@@ -26,7 +26,7 @@ export default async function Page({ searchParams }: Props) {
 	const refreshToken = cookies().get("refresh_token")?.value;
 
 	const res = await fetch(
-		`https://git-mates-auth.vercel.app/api/login/github/token?refresh_token=${refreshToken}`
+		`http://localhost:3000/api/login/github/token?refresh_token=${refreshToken}`
 	);
 	console.log("🚀 ~ Page ~ res:", res);
 	const data = await res.json();

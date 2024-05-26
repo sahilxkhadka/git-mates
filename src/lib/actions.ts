@@ -68,11 +68,10 @@ export const redirectToHome = async () => {
 };
 
 export const unfollowUser = async (userName: string) => {
-	console.log("🚀 ~ unfollowUser ~ userName:", userName);
-	("use server");
+	"use server";
 	const refreshToken = cookies().get("refresh_token")?.value;
 	const req = await fetch(
-		`https://git-mates-auth.vercel.app/api/login/github/token?refresh_token=${refreshToken}`
+		`http://localhost:3000/api/login/github/token?refresh_token=${refreshToken}`
 	);
 	const accessTokenData = await req.json();
 
@@ -80,11 +79,12 @@ export const unfollowUser = async (userName: string) => {
 	console.log("🚀 ~ unfollowUser ~ accessToken:", accessToken);
 
 	const res = await fetch(`https://api.github.com/user/following/${userName}`, {
-		method: "DELETE",
+		method: "PUT",
 		headers: {
 			Authorization: `Bearer ${accessToken}`,
 			Accept: "application/vnd.github+json",
 			"X-GitHub-Api-Version": "2022-11-28",
+			"Content-Lenth": "zero",
 		},
 	});
 	console.log("status: ", res.status);
