@@ -71,7 +71,7 @@ export const unfollowUser = async (userName: string) => {
 	"use server";
 	const refreshToken = cookies().get("refresh_token")?.value;
 	const req = await fetch(
-		`http://localhost:3000/api/login/github/token?refresh_token=${refreshToken}`
+		`http://localhost:3000/api/github/token?refresh_token=${refreshToken}`
 	);
 	const accessTokenData = await req.json();
 
