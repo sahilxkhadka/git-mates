@@ -17,9 +17,9 @@ export default function RootLayout({
 }>) {
 	return (
 		<main className='flex h-screen flex-col items-center gap-4 p-4 sm:p-8'>
-			<Suspense>
+			{/* <Suspense>
 				<UserForm />
-			</Suspense>
+			</Suspense> */}
 			{children}
 		</main>
 	);

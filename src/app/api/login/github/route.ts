@@ -17,6 +17,7 @@ export async function GET(request: NextRequest) {
 
 		const resultParameters = new URLSearchParams(data);
 		const refreshToken = resultParameters.get("refresh_token") ?? "";
+		console.log("🚀 ~ GET ~ refreshToken:", refreshToken);
 		const expiry = parseInt(
 			resultParameters.get("refresh_token_expires_in") ?? "0"
 		);
@@ -27,6 +28,8 @@ export async function GET(request: NextRequest) {
 			maxAge: expiry,
 			expires: new Date(Date.now() + expiry),
 		});
+
+		// const getUserInfo =
 
 		redirect("/overview");
 	} else {

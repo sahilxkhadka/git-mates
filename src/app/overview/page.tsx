@@ -6,6 +6,7 @@ import { filterFollowedUsers, filterImposters } from "@/lib/utils";
 import Image from "next/image";
 import Link from "next/link";
 import emptyStateImage from "../../../public/empty-octacat.png";
+import { cookies } from "next/headers";
 
 interface Props {
 	searchParams?: {
@@ -22,17 +23,21 @@ export async function generateMetadata({ searchParams }: Props) {
 }
 
 export default async function Page({ searchParams }: Props) {
-	const userName = searchParams?.userName || "";
-	const activeTab = searchParams?.tab || "imposters";
-	const followersData = getFollwersList(userName);
-	const followingData = getFollowingList(userName);
+	const refreshToken = cookies().get("refresh_token")?.value;
+
+	const res = await fetch(
+		`http://localhost:3000/api/login/github/token?refresh_token=${refreshToken}`
+	);
+	console.log("🚀 ~ Page ~ res:", res);
+	const data = await res.json();
+
+	const followersData = getFollwersList(data.accessToken);
+	const followingData = getFollowingList(data.accessToken);
 
 	const [followers, following] = await Promise.all([
 		followersData,
 		followingData,
 	]);
-	console.log("followers: ", followers);
-	console.log("following", following);
 	const imposters = filterImposters(followers, following);
 	const updatedFollowersList = filterFollowedUsers(followers, following);
 
@@ -41,6 +46,8 @@ export default async function Page({ searchParams }: Props) {
 		followers: updatedFollowersList,
 		following,
 	};
+
+	const activeTab = searchParams?.tab || "imposters";
 	const listItems = overallList[activeTab];
 	const outlineColor = avatarOutlineColors[activeTab];
 	return (
