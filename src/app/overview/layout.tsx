@@ -1,3 +1,4 @@
+import LogoutBtn from "@/components/logout-btn";
 import UserForm from "@/components/user-form";
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
@@ -20,6 +21,7 @@ export default function RootLayout({
 			{/* <Suspense>
 				<UserForm />
 			</Suspense> */}
+			<LogoutBtn />
 			{children}
 		</main>
 	);
