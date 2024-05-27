@@ -13,6 +13,7 @@ export const metadata: Metadata = {
 
 export default async function Home() {
 	const isLoggedIn = cookies().get("refresh_token")?.value;
+	console.log("🚀 ~ Home ~ isLoggedIn:", isLoggedIn);
 
 	const pathname = isLoggedIn
 		? "/overview"
