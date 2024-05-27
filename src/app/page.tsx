@@ -21,7 +21,6 @@ export default async function Home() {
 		<div className='flex-1'>
 			<Link
 				href={pathname}
-				as={"/overview"}
 				className='flex gap-4 w-fit mx-auto my-4 border py-2 px-4 rounded-md'
 			>
 				<svg viewBox='0 0 24 24' className='w-6 h-6'>
