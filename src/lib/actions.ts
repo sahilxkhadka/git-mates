@@ -80,21 +80,36 @@ export const manageFollowers = async (userName: string, followed: boolean) => {
 	console.log("🚀 ~ unfollowUser ~ accessToken:", accessToken);
 
 	try {
-		const res = await fetch(
-			`https://api.github.com/user/following/${userName}`,
-			{
-				method: "DELETE",
-				headers: {
-					Authorization: `Bearer ${accessToken}`,
-					Accept: "application/vnd.github+json",
-					'X-GitHub-Api-Version': '2022-11-28',
-				},
-			}
-		);
-		console.log("status: ", res.status);
-		const data = await res.json();
-		console.log("🚀 ~ unfollowUser ~ data:", data);
-		revalidateTag("following");
+		if(followed){
+			const res = await fetch(
+				`https://api.github.com/user/following/${userName}`,
+				{
+					method: "DELETE",
+					headers: {
+						Authorization: `Bearer ${accessToken}`,
+						Accept: "application/vnd.github+json",
+						'X-GitHub-Api-Version': '2022-11-28',
+					},
+				}
+			);
+			console.log("status: ", res.status);
+			revalidateTag("following");
+		}else{
+			const res = await fetch(
+				`https://api.github.com/user/following/${userName}`,
+				{
+					method: "PUT",
+					headers: {
+						Authorization: `Bearer ${accessToken}`,
+						Accept: "application/vnd.github+json",
+						'X-GitHub-Api-Version': '2022-11-28',
+					},
+				}
+			);
+			console.log("status: ", res.status);
+			revalidateTag("unfollow");
+
+		}
 	} catch (error) {
 		console.log(error);
 	}
