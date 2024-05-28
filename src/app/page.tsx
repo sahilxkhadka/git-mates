@@ -17,7 +17,7 @@ export default async function Home() {
 
 	const pathname = isLoggedIn
 		? "/overview"
-		: `https://github.com/login/oauth/authorize?client_id=${process.env.GITHUB_CLIENT_ID}`;
+		: `https://github.com/apps/git-mates/installations/new`;
 	return (
 		<div className='flex-1'>
 			<Link

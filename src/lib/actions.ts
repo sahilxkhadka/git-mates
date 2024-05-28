@@ -4,6 +4,7 @@ import { unstable_noStore as noStore, revalidateTag } from "next/cache";
 import { notFound, redirect } from "next/navigation";
 import { Data } from "./definitions";
 import { cookies } from "next/headers";
+import axios from "axios";
 
 export const getFollwersList = async (accessToken: string) => {
 	console.log("🚀 ~ getFollwersList ~ accessToken:", accessToken);
@@ -76,26 +77,41 @@ export const unfollowUser = async (userName: string) => {
 	const accessTokenData = await req.json();
 
 	const accessToken = accessTokenData.accessToken;
-	console.log("🚀 ~ unfollowUser ~ accessToken:", accessToken);
+	// console.log("🚀 ~ unfollowUser ~ accessToken:", accessToken);
 
 	try {
+		// const res = await fetch('https://api.github.com/user', {
+		// 	headers: {
+		// 		Authorization: `Bearer ${accessToken}`,
+		// 		Accept: "application/vnd.github.v3+json",
+		// 	},
+		// });
+		// const data = await res.json();
+		// // console.log("🚀 ~ unfollowUser ~ data:", data);
+		// 	const scopes = res.headers;
+		// 	console.log('Token Scopes:', scopes);
+		
 		const res = await fetch(
 			`https://api.github.com/user/following/${userName}`,
 			{
-				method: "PUT",
+				method: "DELETE",
 				headers: {
 					Authorization: `Bearer ${accessToken}`,
 					Accept: "application/vnd.github+json",
-					"X-GitHub-Api-Version": "2022-11-28",
-					"content-length": "0",
+					'X-GitHub-Api-Version': '2022-11-28',
+					// "content-length": "0",
+					// 'User-Agent': 'Mimo git mates'
 				},
 			}
 		);
 		console.log("status: ", res.status);
 		const data = await res.json();
+		// const headers = res.headers;
+		// console.log("🚀 ~ unfollowUser ~ headers:", headers)
 		console.log("🚀 ~ unfollowUser ~ data:", data);
+	
 
-		revalidateTag("following");
+		// revalidateTag("following");
 	} catch (error) {
 		console.log(error);
 	}
