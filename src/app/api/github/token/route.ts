@@ -6,7 +6,7 @@ export async function GET(req: NextRequest) {
   const refreshToken = searchParams.get("refresh_token");
 
   const res = await fetch(
-    `https://github.com/login/oauth/access_token?client_id=${process.env.GITHUB_CLIENT_ID}&client_secret=${process.env.GITHUB_CLIENT_SECRET}&grant_type=refresh_token&refresh_token=sdjc€dhcdj`,
+    `https://github.com/login/oauth/access_token?client_id=${process.env.GITHUB_CLIENT_ID}&client_secret=${process.env.GITHUB_CLIENT_SECRET}&grant_type=refresh_token&refresh_token=${refreshToken}`,
     { method: "POST" }
   );
 
