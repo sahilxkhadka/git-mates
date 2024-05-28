@@ -68,7 +68,7 @@ export const redirectToHome = async () => {
 	redirect("/");
 };
 
-export const unfollowUser = async (userName: string) => {
+export const manageFollowers = async (userName: string, followed: boolean) => {
 	"use server";
 	const refreshToken = cookies().get("refresh_token")?.value;
 	const req = await fetch(
@@ -77,20 +77,9 @@ export const unfollowUser = async (userName: string) => {
 	const accessTokenData = await req.json();
 
 	const accessToken = accessTokenData.accessToken;
-	// console.log("🚀 ~ unfollowUser ~ accessToken:", accessToken);
+	console.log("🚀 ~ unfollowUser ~ accessToken:", accessToken);
 
 	try {
-		// const res = await fetch('https://api.github.com/user', {
-		// 	headers: {
-		// 		Authorization: `Bearer ${accessToken}`,
-		// 		Accept: "application/vnd.github.v3+json",
-		// 	},
-		// });
-		// const data = await res.json();
-		// // console.log("🚀 ~ unfollowUser ~ data:", data);
-		// 	const scopes = res.headers;
-		// 	console.log('Token Scopes:', scopes);
-		
 		const res = await fetch(
 			`https://api.github.com/user/following/${userName}`,
 			{
@@ -99,19 +88,13 @@ export const unfollowUser = async (userName: string) => {
 					Authorization: `Bearer ${accessToken}`,
 					Accept: "application/vnd.github+json",
 					'X-GitHub-Api-Version': '2022-11-28',
-					// "content-length": "0",
-					// 'User-Agent': 'Mimo git mates'
 				},
 			}
 		);
 		console.log("status: ", res.status);
 		const data = await res.json();
-		// const headers = res.headers;
-		// console.log("🚀 ~ unfollowUser ~ headers:", headers)
 		console.log("🚀 ~ unfollowUser ~ data:", data);
-	
-
-		// revalidateTag("following");
+		revalidateTag("following");
 	} catch (error) {
 		console.log(error);
 	}

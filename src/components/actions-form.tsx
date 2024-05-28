@@ -1,6 +1,6 @@
 "use client";
 
-import { unfollowUser } from "@/lib/actions";
+import { manageFollowers } from "@/lib/actions";
 
 interface Props {
 	followed: boolean;
@@ -11,7 +11,7 @@ export default function ActionsForm({ followed, userName }: Props) {
 	return (
 		<button
 			onClick={async () => {
-				await unfollowUser(userName);
+				await manageFollowers(userName, followed);
 			}}
 			type='submit'
 			className={`text-sm w-24 text-center border-b-4 font-medium overflow-hidden relative px-4 py-2 rounded-md hover:brightness-150 hover:border-t-4 hover:border-b active:opacity-75 outline-none duration-300 group ${
