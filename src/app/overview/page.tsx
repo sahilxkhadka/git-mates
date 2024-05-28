@@ -33,7 +33,7 @@ export default async function Page({ searchParams }: Props) {
 	const data = await res.json();
 
 	if(data.accessToken === null){
-		redirect("/")
+		redirect("/");
 	}
 
 	const followersData = getFollwersList(data.accessToken);
