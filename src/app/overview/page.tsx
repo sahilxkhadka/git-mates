@@ -7,6 +7,7 @@ import Image from "next/image";
 import Link from "next/link";
 import emptyStateImage from "../../../public/empty-octacat.png";
 import { cookies } from "next/headers";
+import { redirect } from "next/navigation";
 
 interface Props {
 	searchParams?: {
@@ -30,6 +31,10 @@ export default async function Page({ searchParams }: Props) {
 	);
 	console.log("🚀 ~ Page ~ res:", res);
 	const data = await res.json();
+
+	if(data.accessToken === null){
+		redirect("/")
+	}
 
 	const followersData = getFollwersList(data.accessToken);
 	const followingData = getFollowingList(data.accessToken);
