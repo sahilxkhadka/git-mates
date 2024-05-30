@@ -14,6 +14,7 @@ export async function middleware(request: NextRequest) {
 	if (nextUrl.pathname === "/logout") {
 		const response = NextResponse.redirect(new URL("/", request.url));
 		response.cookies.delete("refresh_token");
+		response.cookies.delete("access_token");
 		return response;
 	}
 }

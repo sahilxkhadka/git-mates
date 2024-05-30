@@ -2,6 +2,9 @@ import { cookies } from "next/headers";
 import { NextRequest } from "next/server";
 
 export async function GET(req: NextRequest) {
+	const cookiesStore = cookies().getAll();
+	console.log("🚀 ~ GET ~ cookies:", cookiesStore);
+
 	const searchParams = req.nextUrl.searchParams;
 	const refreshToken = searchParams.get("refresh_token");
 
@@ -23,7 +26,15 @@ export async function GET(req: NextRequest) {
 		expires: new Date(Date.now() + expiry),
 	});
 
-	const accessToken = dataParams.get("access_token");
+	const accessToken = dataParams.get("access_token") ?? "";
+	const accessTokenExpiry = parseInt(dataParams.get("expires_in") ?? "0");
+
+	cookies().set({
+		name: "access_token",
+		value: accessToken,
+		maxAge: accessTokenExpiry,
+		expires: new Date(Date.now() + accessTokenExpiry),
+	});
 
 	return Response.json({ accessToken });
 }

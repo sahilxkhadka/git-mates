@@ -5,6 +5,23 @@ import { cookies } from "next/headers";
 import { notFound, redirect } from "next/navigation";
 import { Data } from "./definitions";
 
+export const getAccessToken = async () => {
+	const cookieAccessToken = cookies().get("access_token")?.value;
+
+	if (cookieAccessToken) {
+		return cookieAccessToken;
+	}
+	const refreshToken = cookies().get("refresh_token")?.value;
+	const req = await fetch(
+		`http://localhost:3000/api/github/token?refresh_token=${refreshToken}`
+	);
+	const accessTokenData = await req.json();
+
+	const accessToken = accessTokenData.accessToken;
+
+	return accessToken;
+};
+
 export const getFollwersList = async (accessToken: string) => {
 	console.log("🚀 ~ getFollwersList ~ accessToken:", accessToken);
 	// noStore();
@@ -69,14 +86,7 @@ export const redirectToHome = async () => {
 
 export const manageFollowers = async (userName: string, followed: boolean) => {
 	"use server";
-	const refreshToken = cookies().get("refresh_token")?.value;
-	const req = await fetch(
-		`http://localhost:3000/api/github/token?refresh_token=${refreshToken}`
-	);
-	const accessTokenData = await req.json();
-
-	const accessToken = accessTokenData.accessToken;
-	console.log("🚀 ~ unfollowUser ~ accessToken:", accessToken);
+	const accessToken = await getAccessToken();
 
 	if (followed) {
 		const res = await fetch(
@@ -94,10 +104,9 @@ export const manageFollowers = async (userName: string, followed: boolean) => {
 
 		if (res.status === 403) {
 			cookies().delete("refresh_token");
+			cookies().delete("access_token");
 			redirect("https://github.com/apps/git-mates/installations/new");
 		}
-
-		revalidateTag("following");
 	} else {
 		const res = await fetch(
 			`https://api.github.com/user/following/${userName}`,
@@ -111,18 +120,13 @@ export const manageFollowers = async (userName: string, followed: boolean) => {
 			}
 		);
 		console.log("status: ", res.status);
-		revalidateTag("unfollow");
 	}
+	revalidateTag("following");
+	revalidateTag("followers");
 };
 
 export const getUserDetails = async () => {
-	const refreshToken = cookies().get("refresh_token")?.value;
-	const req = await fetch(
-		`http://localhost:3000/api/github/token?refresh_token=${refreshToken}`
-	);
-	const accessTokenData = await req.json();
-
-	const accessToken = accessTokenData.accessToken;
+	const accessToken = await getAccessToken();
 
 	const res = await fetch(`https://api.github.com/user`, {
 		headers: {

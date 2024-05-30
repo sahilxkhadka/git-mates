@@ -33,6 +33,18 @@ export async function GET(request: NextRequest) {
 
 		// const getUserInfo =
 
+		const accessToken = resultParameters.get("access_token") ?? "";
+		const accessTokenExpiry = parseInt(
+			resultParameters.get("expires_in") ?? "0"
+		);
+
+		cookies().set({
+			name: "access_token",
+			value: accessToken,
+			maxAge: accessTokenExpiry,
+			expires: new Date(Date.now() + accessTokenExpiry),
+		});
+
 		redirect("/overview");
 	} else {
 		return new Response("Error from github", {

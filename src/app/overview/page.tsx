@@ -1,13 +1,16 @@
 import ListItem from "@/components/list-item";
-import { getFollowingList, getFollwersList } from "@/lib/actions";
+import {
+	getAccessToken,
+	getFollowingList,
+	getFollwersList,
+} from "@/lib/actions";
 import { avatarOutlineColors, tabs } from "@/lib/constants";
 import { Tabs } from "@/lib/definitions";
 import { filterFollowedUsers, filterImposters } from "@/lib/utils";
 import Image from "next/image";
 import Link from "next/link";
-import emptyStateImage from "../../../public/empty-octacat.png";
-import { cookies } from "next/headers";
 import { redirect } from "next/navigation";
+import emptyStateImage from "../../../public/empty-octacat.png";
 
 interface Props {
 	searchParams?: {
@@ -24,20 +27,14 @@ export async function generateMetadata({ searchParams }: Props) {
 }
 
 export default async function Page({ searchParams }: Props) {
-	const refreshToken = cookies().get("refresh_token")?.value;
+	const accessToken = await getAccessToken();
 
-	const res = await fetch(
-		`http://localhost:3000/api/github/token?refresh_token=${refreshToken}`
-	);
-	const data = await res.json();
-	console.log(data);
-
-	if (!data.accessToken) {
+	if (!accessToken) {
 		redirect("/logout");
 	}
 
-	const followersData = getFollwersList(data.accessToken);
-	const followingData = getFollowingList(data.accessToken);
+	const followersData = getFollwersList(accessToken);
+	const followingData = getFollowingList(accessToken);
 
 	const [followers, following] = await Promise.all([
 		followersData,
