@@ -114,3 +114,26 @@ export const manageFollowers = async (userName: string, followed: boolean) => {
 		revalidateTag("unfollow");
 	}
 };
+
+export const getUserDetails = async () => {
+	const refreshToken = cookies().get("refresh_token")?.value;
+	const req = await fetch(
+		`http://localhost:3000/api/github/token?refresh_token=${refreshToken}`
+	);
+	const accessTokenData = await req.json();
+
+	const accessToken = accessTokenData.accessToken;
+
+	const res = await fetch(`https://api.github.com/user`, {
+		headers: {
+			Authorization: `Bearer ${accessToken}`,
+			Accept: "application/vnd.github+json",
+			"X-GitHub-Api-Version": "2022-11-28",
+		},
+	});
+	console.log("status: ", res.status);
+
+	const data: Data = await res.json();
+	console.log("🚀 ~ getUserDetails ~ data:", data);
+	return data;
+};

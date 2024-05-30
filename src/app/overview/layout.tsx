@@ -1,4 +1,4 @@
-import LogoutBtn from "@/components/logout-btn";
+import UserInfo from "@/components/user-info";
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 
@@ -17,7 +17,7 @@ export default function RootLayout({
 	return (
 		<main className='flex-1 flex flex-col items-center gap-4 p-4 pt-0 sm:p-8 sm:pt-0 overflow-y-auto sm:pb-2'>
 			<div className='flex'>
-				<LogoutBtn />
+				<UserInfo />
 			</div>
 			{children}
 		</main>
