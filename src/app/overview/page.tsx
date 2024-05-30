@@ -29,11 +29,11 @@ export default async function Page({ searchParams }: Props) {
 	const res = await fetch(
 		`http://localhost:3000/api/github/token?refresh_token=${refreshToken}`
 	);
-	console.log("🚀 ~ Page ~ res:", res);
 	const data = await res.json();
+	console.log(data);
 
-	if(data.accessToken === null){
-		redirect("/");
+	if (!data.accessToken) {
+		redirect("/logout");
 	}
 
 	const followersData = getFollwersList(data.accessToken);

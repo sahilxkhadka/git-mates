@@ -1,10 +1,9 @@
 "use server";
 
-import { unstable_noStore as noStore, revalidateTag } from "next/cache";
+import { revalidateTag } from "next/cache";
+import { cookies } from "next/headers";
 import { notFound, redirect } from "next/navigation";
 import { Data } from "./definitions";
-import { cookies } from "next/headers";
-import axios from "axios";
 
 export const getFollwersList = async (accessToken: string) => {
 	console.log("🚀 ~ getFollwersList ~ accessToken:", accessToken);
@@ -79,38 +78,39 @@ export const manageFollowers = async (userName: string, followed: boolean) => {
 	const accessToken = accessTokenData.accessToken;
 	console.log("🚀 ~ unfollowUser ~ accessToken:", accessToken);
 
-	try {
-		if(followed){
-			const res = await fetch(
-				`https://api.github.com/user/following/${userName}`,
-				{
-					method: "DELETE",
-					headers: {
-						Authorization: `Bearer ${accessToken}`,
-						Accept: "application/vnd.github+json",
-						'X-GitHub-Api-Version': '2022-11-28',
-					},
-				}
-			);
-			console.log("status: ", res.status);
-			revalidateTag("following");
-		}else{
-			const res = await fetch(
-				`https://api.github.com/user/following/${userName}`,
-				{
-					method: "PUT",
-					headers: {
-						Authorization: `Bearer ${accessToken}`,
-						Accept: "application/vnd.github+json",
-						'X-GitHub-Api-Version': '2022-11-28',
-					},
-				}
-			);
-			console.log("status: ", res.status);
-			revalidateTag("unfollow");
+	if (followed) {
+		const res = await fetch(
+			`https://api.github.com/user/following/${userName}`,
+			{
+				method: "DELETE",
+				headers: {
+					Authorization: `Bearer ${accessToken}`,
+					Accept: "application/vnd.github+json",
+					"X-GitHub-Api-Version": "2022-11-28",
+				},
+			}
+		);
+		console.log("status: ", res.status);
 
+		if (res.status === 403) {
+			cookies().delete("refresh_token");
+			redirect("https://github.com/apps/git-mates/installations/new");
 		}
-	} catch (error) {
-		console.log(error);
+
+		revalidateTag("following");
+	} else {
+		const res = await fetch(
+			`https://api.github.com/user/following/${userName}`,
+			{
+				method: "PUT",
+				headers: {
+					Authorization: `Bearer ${accessToken}`,
+					Accept: "application/vnd.github+json",
+					"X-GitHub-Api-Version": "2022-11-28",
+				},
+			}
+		);
+		console.log("status: ", res.status);
+		revalidateTag("unfollow");
 	}
 };
