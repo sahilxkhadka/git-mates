@@ -1,8 +1,7 @@
 import { avatarOutlineColors } from "@/lib/constants";
 import { Data, Tabs } from "@/lib/definitions";
 import Image from "next/image";
-import Link from "next/link";
-import ActionsForm from "./actions-form";
+import ActionsBtn from "./actions-btn";
 
 interface Props {
 	userInfo: Data;
@@ -28,7 +27,7 @@ export default async function ListItem({ userInfo, activeTab }: Props) {
 				}}
 			/>
 			<div className='flex-1 truncate'>{login}</div>
-			<ActionsForm followed={followed} userName={login} />
+			<ActionsBtn followed={followed} userName={login} />
 		</div>
 	);
 }
