@@ -5,6 +5,7 @@ export type Data = {
 	url: string;
 	html_url: string;
 	hasFollowed?: boolean;
+	name: string;
 };
 
 export type Tabs = "imposters" | "followers" | "following";

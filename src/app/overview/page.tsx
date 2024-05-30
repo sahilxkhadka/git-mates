@@ -1,10 +1,15 @@
 import ListItem from "@/components/list-item";
-import { getFollowingList, getFollwersList } from "@/lib/actions";
+import {
+	getAccessToken,
+	getFollowingList,
+	getFollwersList,
+} from "@/lib/actions";
 import { avatarOutlineColors, tabs } from "@/lib/constants";
 import { Tabs } from "@/lib/definitions";
 import { filterFollowedUsers, filterImposters } from "@/lib/utils";
 import Image from "next/image";
 import Link from "next/link";
+import { redirect } from "next/navigation";
 import emptyStateImage from "../../../public/empty-octacat.png";
 
 interface Props {
@@ -22,17 +27,19 @@ export async function generateMetadata({ searchParams }: Props) {
 }
 
 export default async function Page({ searchParams }: Props) {
-	const userName = searchParams?.userName || "";
-	const activeTab = searchParams?.tab || "imposters";
-	const followersData = getFollwersList(userName);
-	const followingData = getFollowingList(userName);
+	const accessToken = await getAccessToken();
+
+	if (!accessToken) {
+		redirect("/logout");
+	}
+
+	const followersData = getFollwersList(accessToken);
+	const followingData = getFollowingList(accessToken);
 
 	const [followers, following] = await Promise.all([
 		followersData,
 		followingData,
 	]);
-	console.log("followers: ", followers);
-	console.log("following", following);
 	const imposters = filterImposters(followers, following);
 	const updatedFollowersList = filterFollowedUsers(followers, following);
 
@@ -41,6 +48,8 @@ export default async function Page({ searchParams }: Props) {
 		followers: updatedFollowersList,
 		following,
 	};
+
+	const activeTab = searchParams?.tab || "imposters";
 	const listItems = overallList[activeTab];
 	const outlineColor = avatarOutlineColors[activeTab];
 	return (

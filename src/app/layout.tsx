@@ -1,10 +1,8 @@
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
-import "./globals.css";
 import Image from "next/image";
-import UserForm from "@/components/user-form";
 import githubOctacat from "../../public/github-octacat.png";
-import { Suspense } from "react";
+import "./globals.css";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -21,13 +19,14 @@ export default function RootLayout({
 	return (
 		<html lang='en'>
 			<body className={inter.className}>
-				<main className='flex h-screen flex-col items-center gap-4 p-4 sm:p-8'>
+				<main className='flex h-screen flex-col items-center gap-4 p-4 sm:p-8 sm:pb-0'>
 					<Image
 						src={githubOctacat}
 						alt='Github Logo'
 						height={80}
 						width={80}
 						placeholder='blur'
+						loading='eager'
 					/>
 					<div className='text-center'>
 						<h1
@@ -40,9 +39,6 @@ export default function RootLayout({
 							Discover your true gitizens.
 						</p>
 					</div>
-					<Suspense>
-						<UserForm />
-					</Suspense>
 					{children}
 				</main>
 			</body>
