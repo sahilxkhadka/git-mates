@@ -103,8 +103,16 @@ export const manageFollowers = async (userName: string, followed: boolean) => {
 		console.log("status: ", res.status);
 
 		if (res.status === 403) {
-			cookies().delete("refresh_token");
-			cookies().delete("access_token");
+			cookies().delete({
+				name: "refresh_token",
+				domain: "git-mates.vercel.app",
+				secure: true,
+			});
+			cookies().delete({
+				name: "access_token",
+				domain: "git-mates.vercel.app",
+				secure: true,
+			});
 			redirect("https://github.com/apps/git-mates/installations/new");
 		}
 	} else {
@@ -120,6 +128,19 @@ export const manageFollowers = async (userName: string, followed: boolean) => {
 			}
 		);
 		console.log("status: ", res.status);
+		if (res.status === 403) {
+			cookies().delete({
+				name: "refresh_token",
+				domain: "git-mates.vercel.app",
+				secure: true,
+			});
+			cookies().delete({
+				name: "access_token",
+				domain: "git-mates.vercel.app",
+				secure: true,
+			});
+			redirect("https://github.com/apps/git-mates/installations/new");
+		}
 	}
 	revalidateTag("following");
 	revalidateTag("followers");
