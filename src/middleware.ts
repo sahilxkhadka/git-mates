@@ -15,11 +15,11 @@ export async function middleware(request: NextRequest) {
 		const response = NextResponse.redirect(new URL("/", request.url));
 		response.cookies.delete({
 			name: "refresh_token",
-			domain: "git-mates.vercel.app",
+			domain: ".git-mates.vercel.app",
 		});
 		response.cookies.delete({
 			name: "access_token",
-			domain: "git-mates.vercel.app",
+			domain: ".git-mates.vercel.app",
 		});
 		return response;
 	}
