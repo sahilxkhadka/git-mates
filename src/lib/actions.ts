@@ -162,3 +162,18 @@ export const getUserDetails = async () => {
 	console.log("🚀 ~ getUserDetails ~ data:", data);
 	return data;
 };
+
+export const handleLogout = async () => {
+	"use server";
+	cookies().delete({
+		name: "refresh_token",
+		domain: "git-mates.vercel.app",
+		secure: true,
+	});
+	cookies().delete({
+		name: "access_token",
+		domain: "git-mates.vercel.app",
+		secure: true,
+	});
+	redirect("/");
+};
