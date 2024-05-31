@@ -13,7 +13,7 @@ export const getAccessToken = async () => {
 	}
 	const refreshToken = cookies().get("refresh_token")?.value;
 	const req = await fetch(
-		`https://git-mates.vercel.app/api/github/token?refresh_token=${refreshToken}`
+		`http://localhost:3000/api/github/token?refresh_token=${refreshToken}`
 	);
 	const accessTokenData = await req.json();
 
