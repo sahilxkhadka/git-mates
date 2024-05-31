@@ -27,6 +27,7 @@ export async function GET(request: NextRequest) {
 		cookies().set({
 			name: "refresh_token",
 			value: refreshToken,
+			domain: "git-mates.vercel.app",
 			maxAge: expiry,
 			expires: new Date(Date.now() + expiry),
 			secure: true,
@@ -41,6 +42,7 @@ export async function GET(request: NextRequest) {
 
 		cookies().set({
 			name: "access_token",
+			domain: "git-mates.vercel.app",
 			value: accessToken,
 			maxAge: accessTokenExpiry,
 			expires: new Date(Date.now() + accessTokenExpiry),
