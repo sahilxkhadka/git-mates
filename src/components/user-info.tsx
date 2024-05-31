@@ -4,7 +4,7 @@ import Link from "next/link";
 
 export default async function UserInfo() {
 	const userDetails = await getUserDetails();
-	const { avatar_url, name, html_url } = userDetails;
+	const { avatar_url, name, html_url, login } = userDetails;
 	return (
 		<div className='flex items-center w-72 justify-between gap-2'>
 			<Link href={html_url}>
@@ -12,12 +12,12 @@ export default async function UserInfo() {
 					src={avatar_url}
 					height={40}
 					width={40}
-					alt={userDetails.login}
+					alt={name || login}
 					className='rounded-full'
 				/>
 			</Link>
 			<div className='flex-1 truncate mr-5'>
-				<p className='font-medium'>{name}</p>
+				<p className='font-medium'>{name || login}</p>
 			</div>
 			<Link
 				href={"/logout"}
