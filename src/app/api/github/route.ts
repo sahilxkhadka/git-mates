@@ -29,6 +29,7 @@ export async function GET(request: NextRequest) {
 			value: refreshToken,
 			maxAge: expiry,
 			expires: new Date(Date.now() + expiry),
+			secure: true,
 		});
 
 		// const getUserInfo =
@@ -43,6 +44,7 @@ export async function GET(request: NextRequest) {
 			value: accessToken,
 			maxAge: accessTokenExpiry,
 			expires: new Date(Date.now() + accessTokenExpiry),
+			secure: true,
 		});
 
 		redirect("/overview");

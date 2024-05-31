@@ -24,6 +24,7 @@ export async function GET(req: NextRequest) {
 		value: newToken,
 		maxAge: expiry,
 		expires: new Date(Date.now() + expiry),
+		secure: true,
 	});
 
 	const accessToken = dataParams.get("access_token") ?? "";
@@ -34,6 +35,7 @@ export async function GET(req: NextRequest) {
 		value: accessToken,
 		maxAge: accessTokenExpiry,
 		expires: new Date(Date.now() + accessTokenExpiry),
+		secure: true,
 	});
 
 	return Response.json({ accessToken });
