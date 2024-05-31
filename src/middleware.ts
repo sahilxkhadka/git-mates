@@ -13,16 +13,8 @@ export async function middleware(request: NextRequest) {
 
 	if (nextUrl.pathname === "/logout") {
 		const response = NextResponse.redirect(new URL("/", request.url));
-		response.cookies.delete({
-			name: "refresh_token",
-			domain: "git-mates.vercel.app",
-			secure: true,
-		});
-		response.cookies.delete({
-			name: "access_token",
-			domain: "git-mates.vercel.app",
-			secure: true,
-		});
+		response.cookies.delete("refresh_token");
+		response.cookies.delete("access_token");
 		return response;
 	}
 }
