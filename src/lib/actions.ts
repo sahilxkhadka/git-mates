@@ -5,7 +5,10 @@ import { cookies } from "next/headers";
 import { notFound, redirect } from "next/navigation";
 import { Data } from "./definitions";
 
+import { unstable_noStore as noStore } from "next/cache";
+
 export const getAccessToken = async () => {
+	noStore();
 	const cookieAccessToken = cookies().get("access_token")?.value;
 
 	if (cookieAccessToken) {
