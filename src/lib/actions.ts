@@ -1,6 +1,6 @@
 "use server";
 
-import { revalidateTag } from "next/cache";
+import { revalidatePath, revalidateTag } from "next/cache";
 import { cookies } from "next/headers";
 import { notFound, redirect } from "next/navigation";
 import { Data } from "./definitions";
@@ -15,14 +15,14 @@ export const getAccessToken = async () => {
 		return cookieAccessToken;
 	}
 	const refreshToken = cookies().get("refresh_token")?.value;
-	const req = await fetch(
+	redirect(
 		`https://git-mates.vercel.app/api/github/token?refresh_token=${refreshToken}`
 	);
-	const accessTokenData = await req.json();
+	// const accessTokenData = await req.json();
 
-	const accessToken = accessTokenData.accessToken;
+	// const accessToken = accessTokenData.accessToken;
 
-	return accessToken;
+	// return accessToken;
 };
 
 export const getFollwersList = async (accessToken: string) => {

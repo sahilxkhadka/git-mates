@@ -19,6 +19,8 @@ interface Props {
 	};
 }
 
+export const dynamic = "force-dynamic";
+
 export async function generateMetadata({ searchParams }: Props) {
 	return {
 		title: `Git ${searchParams?.tab || "imposters"}`,
