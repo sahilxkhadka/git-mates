@@ -24,10 +24,10 @@ export async function GET(req: NextRequest) {
 	cookies().set({
 		name: "refresh_token",
 		value: newToken,
-		// domain: "git-mates.vercel.app",
+		domain: "git-mates.vercel.app",
 		maxAge: expiry,
 		expires: new Date(Date.now() + expiry),
-		// secure: true,
+		secure: true,
 	});
 
 	const accessToken = dataParams.get("access_token") ?? "";
@@ -36,10 +36,10 @@ export async function GET(req: NextRequest) {
 	cookies().set({
 		name: "access_token",
 		value: accessToken,
-		// domain: "git-mates.vercel.app",
+		domain: "git-mates.vercel.app",
 		maxAge: accessTokenExpiry,
 		expires: new Date(Date.now() + accessTokenExpiry),
-		// secure: true,
+		secure: true,
 	});
 
 	redirect("/overview");
